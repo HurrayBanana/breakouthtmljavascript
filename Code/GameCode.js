@@ -31,7 +31,7 @@ function initialise() {
 function startDemo()
 {
 	activeMode = "demo";
-	level = 1;
+	level = getDemoLevel();
     c_score = 0;
 	lives = 3;
 
@@ -63,6 +63,10 @@ function resetGame() {
 //activates gameplay after 3 seconds
 function delayStart()
 {
+	//get demo logo on screen
+	if (activeMode == "demo")
+		showDemoLogo();
+	
     showGetReady();
     starttimer = setTimeout(startPlay, 3000);
 }
@@ -86,7 +90,13 @@ function timerloop()
 	else if (mode == "demo")
 	{
 		demoLoop();
+		demologo.tick(delta);
+
 	}
+	//animate demo logo even if waiting for play to start
+	else if (activeMode == "demo")
+			demologo.tick(delta);
+		
     //any timer aware activities for all modes go here
     if (logo != null)
         logo.tick(delta);
@@ -95,6 +105,7 @@ function timerloop()
 //logic for demo mode
 function demoLoop()
 {
+	
 	if (levelUpdateCallBack != null)
 		levelUpdateCallBack(delta);
 	
@@ -109,11 +120,13 @@ function demoLoop()
 	removeDeadBricks();
 	removeDeadBalls();
 	
-	if (gametime % 10000 == 0)
+	//stop after 20 seconds
+	if (gametime >= 20000)
 	{
-		level = getDemoLevel();
-		mode = "in between";
-		resetGame();
+		//level = getDemoLevel();
+		//mode = "in between";
+		//resetGame();
+		titleScreen();
 	}
 	c_score = 0;
 }
@@ -247,6 +260,7 @@ function clear(item) {
     while (item.firstChild) {
         item.removeChild(item.firstChild);
     }
+	//always draw my logo
     showLogo();
 }
 //removes any resources that need cancelling

@@ -26,7 +26,7 @@ function nextLevel() {
 
 //draw requirements for current level
 function generateLevel(levelnum) {
-	levelnum = 2; //force particular level to play
+	//levelnum = 2; //force particular level to play for testing
     addScoreInfo(screen);
 	levelUpdateCallBack = null;
     switch (levelnum) {
@@ -48,7 +48,7 @@ function generateLevel(levelnum) {
 			waveBricks(0); //just to position them
 			break;
 		case 5:
-			customRowsScaled(7,9,1.25);
+			customRowsScaled(7,8,1.25);
 			levelUpdateCallBack = waveBricks;
 			waveBricks(0); //just to position them
 			break;
@@ -80,6 +80,25 @@ function generateLevel(levelnum) {
     createStartBall();
     paddle = new Paddle(screen, new vector2(210, 550));
 }
+
+//creates the basic ball that starts the game, or after life lost
+function createStartBall()
+{
+	var direction = new vector2(Math.random() - 0.5, -0.5);
+	//speed between 300
+	direction.strength(300);
+	activeball.push(new Ball(screen, new vector2(250, 500), direction, deadline));
+}
+
+function spawnBall(brick)
+{
+	//2 axis directions
+	var direction = new vector2(Math.random() - 0.5, Math.random() - 0.5);
+	//speed between 200 and 400
+	direction.strength(200 + Math.random() * 200);
+	activeball.push(new Ball(screen, brick.centre, direction, deadline));
+}
+
 function zoom(delta)
 {
 	for (var i = 0; i < activebrick.length; i++)
@@ -89,20 +108,7 @@ function zoom(delta)
 	}
 	angle += 1 * delta;
 }
-//creates the basic ball that starts the game, or after life lost
-function createStartBall()
-{
-	activeball.push(new Ball(screen, new vector2(250, 400), new vector2(100, -100), deadline));
-}
 
-function spawnBall(brick)
-{
-	//2 axis directions
-	var direction = new vector2(Math.random() - 0.5, Math.random() - 0.5);
-	//speed between 100 and 300
-	direction.strength(100 + Math.random() * 200);
-	activeball.push(new Ball(screen, brick.centre, direction, deadline));
-}
 
 var column = 0;
 function phasedShow(delta)
@@ -174,9 +180,9 @@ var dropdelta;
 function dropBlocks(delta)
 {
 	dropdelta += deltamilliseconds;
-	if (dropdelta >= 500)
+	if (dropdelta >= 3000)
 	{
-		dropdelta -= 500;
+		dropdelta -= 3000;
         for (var i = 0; i < activebrick.length; i++) {
             activebrick[i].drop(20);
         }

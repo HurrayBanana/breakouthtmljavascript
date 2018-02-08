@@ -21,7 +21,7 @@ class Brick extends Sprite {
 	{
 		var score = 0;
 	    //remove any blocks moved off screen
-        if (this.onscreen()) {
+        //if (this.onscreen()) {
             //check each active ball against the block
             for (var i = 0; i < allballs.length; i++) {
                 if (!this.dead && allballs[i].touching(this)) {
@@ -30,16 +30,18 @@ class Brick extends Sprite {
                     return allballs[i];
                 }
             }
-        }
-        else
-        {
-            this.kill();
-        }
+        //}
+        //else
+        //{
+        //    this.kill();
+        //}
 		return null;
 	}
 	//drops a brick by number of pixels given
     drop(distance) {
         this.move(0, distance);
+		if (!this.onscreen())
+			this.kill();
     }
 	//moves a brick horizontally by a number of pixels to the left
 	//wrapping around the screen
@@ -57,7 +59,7 @@ class Brick extends Sprite {
 	//ofsets base position of brick using a circular position
 	rotate(angle, sx, sy, xoff, yoff)
 	{
-		this.pos.x = 250 + xoff + Math.cos(angle + this.phasex) * this.basey * sx;
+		this.pos.x = 225 + xoff + Math.cos(angle + this.phasex) * this.basey * sx;
 		this.pos.y = 300 + yoff + Math.sin(angle + this.phasex) * this.basey * sy; 
 		this.render();
 	}

@@ -6,6 +6,7 @@ var scoreText;
 var topscoreText;
 var livesText;
 var logo;
+var demologo;
 
 var currentImage = null;
 //remove any user message graphics
@@ -29,6 +30,11 @@ function titleScreen()
 function showLogo()
 {
     logo = new HBLogo(screen);
+}
+//displays demo
+function showDemoLogo()
+{
+    demologo = new DemoLogo(screen);
 }
 //shows particular user graphic on screen
 function showImage(filename)
