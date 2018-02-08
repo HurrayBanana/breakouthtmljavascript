@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- load all dependencies/libraries of GameCode.js first -->
+    <script src="code\vector2.js"></script>
+    <script src="code\time.js"></script>
+    <script src="code\Sprite.js"></script>
+    <script src="code\MovingSprite.js"></script>
+    <script src="code\Brick.js"></script>
+    <script src="code\Ball.js"></script>
+    <script src="code\Paddle.js"></script>
+    <script src="code\input.js"></script>
+    <script src="code\ui.js"></script>
+    <script src="code\hblogo.js"></script>
+    <script src="code\LevelData.js"></script>
+    <!-- now load the main game code -->
+    <script src="code\GameCode.js"></script>
+    <link href="css\styles.css" rel="stylesheet" />
+    <title>Breakout!</title>
+	<meta charset="utf-8" />
+</head>
+<!-- run initialise when all body content has loaded -->
+<body onload="initialise()">
+    <div id="main">
+        <div id="gameScreen"></div>
+        <input type="button" style="float:left" onclick="startGame()" value="Start Game [1]" />
+        <input type="button" style="float:right" onclick="titleScreen()" value="Quit to Title [esc]" />
+    </div>
+</body>
+</html>
