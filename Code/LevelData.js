@@ -43,12 +43,12 @@ function generateLevel(levelnum) {
 			levelUpdateCallBack = scrollBlocks;
             break;
 		case 4:
-			standardRows(4);
+			standardRows(8);
 			levelUpdateCallBack = waveBricks;
 			waveBricks(0); //just to position them
 			break;
 		case 5:
-			customRowsScaled(7,8,1.25);
+			customRowsScaled(10,8,1.25);
 			levelUpdateCallBack = waveBricks;
 			waveBricks(0); //just to position them
 			break;
@@ -67,14 +67,17 @@ function generateLevel(levelnum) {
 		case 8:
             customRows(7, 8);
 			levelUpdateCallBack = phasedHide;
+			phasedHide(0);
 			break;
 		case 9:
             customRows(7, 8);
 			levelUpdateCallBack = phasedShow;
+			phasedShow(0);
 			break;
 		case 10:
-			customRowsScaled(8,8,1);
+			customRowsScaled(10,8,1);
 			levelUpdateCallBack = zoom;
+			zoom(0);
 			break;
     }
     createStartBall();
@@ -84,8 +87,13 @@ function generateLevel(levelnum) {
 //creates the basic ball that starts the game, or after life lost
 function createStartBall()
 {
-	var direction = new vector2(Math.random() - 0.5, -0.5);
-	//speed between 300
+	//avoid mostly vertical ball play
+	var velo = Math.random() * 0.30;
+	if (Math.random() >= 0.5)
+		velo = 1 - velo;
+
+	var direction = new vector2(velo, -velo*0.8);
+	//speed of 300 pixels per sec
 	direction.strength(300);
 	activeball.push(new Ball(screen, new vector2(250, 500), direction, deadline));
 }
@@ -103,18 +111,21 @@ function zoom(delta)
 {
 	for (var i = 0; i < activebrick.length; i++)
 	{
-		var z = (Math.sin(angle + i/10) * 0.25) + 1.0;
+		var z = (Math.sin(angle + i/10) * 0.35) + 0.9;
 		activebrick[i].scale = z;
 	}
-	angle += 1 * delta;
+	angle += 2 * delta;
 }
 
 
 var column = 0;
+var phasetimer = 0;
 function phasedShow(delta)
 {
-	if (gametime % 80 == 0) 
+	phasetimer += delta;
+	if (phasetimer >= 0.2) 
 	{
+		phasetimer -= 0.2
 		for (var i = 0; i < activebrick.length; i++)
 		{
 			activebrick[i].phasedShow(15 + column * 60);
@@ -124,7 +135,8 @@ function phasedShow(delta)
 }
 function phasedHide(delta)
 {
-	if (gametime % 80 == 0) 
+	phasetimer += delta;
+	if (phasetimer >= 0.2) 
 	{
 		for (var i = 0; i < activebrick.length; i++)
 		{
@@ -138,7 +150,7 @@ var angle = 0;
 function waveBricks(delta)
 {
 	for (var i = 0; i < activebrick.length; i++) {
-		activebrick[i].wave(angle, 10,20);
+		activebrick[i].wave(angle, 100,20);
 	}
 	angle += 2 * delta;
 }function waveBricksWithScale(delta)
@@ -156,14 +168,14 @@ function rotateBricks(delta)
 	for (var i = 0; i < activebrick.length; i++) {
 		activebrick[i].rotate(angle, 1.25 , -1.25 , 0, -50);
 	}
-	angle += 1 * delta;
+	angle += 0.25 * delta;
 }
 function rotateFunckyBricks(delta)
 {
 	for (var i = 0; i < activebrick.length; i++) {
 		activebrick[i].rotate(angle, 1.25 * Math.sin(angle), -1.25 * Math.sin(angle + 0.2), 0, -50);
 	}
-	angle += 1 * delta;
+	angle += 0.25 * delta;
 }
 
 

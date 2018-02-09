@@ -10,20 +10,23 @@ var screen;					//reference to the html container being used for the game screen
 var mode = "title"; 		//current game mode
 var activeMode;				//holds the mode demo or game that needs to be active during play
 var deadline = 570;			//line by which ball is killed
+var democontrol;
 
 //first time setup of system
 //gets reference to game area
 //sets up timer and keyboard events
 function initialise() {
     screen = document.getElementById("gameScreen");
-	//gametime = 0;
+	
 	timerCallBack = timerloop;
-	//starttime = Date.now();
+	
 	timeInitialise();
-    //gameticker = setInterval(timer, tickdelta);
+    
     addEventListener("keydown", move, false);
     addEventListener("keyup", stopmove, false);
 
+	democontrol = new demopick(lastlevel);
+	
     h_score = 100;
     titleScreen();
 }
@@ -31,11 +34,10 @@ function initialise() {
 function startDemo()
 {
 	activeMode = "demo";
-	level = getDemoLevel();
+	level = democontrol.nextlevel; 
     c_score = 0;
 	lives = 3;
 
-    //clear(screen);
     resetGame();
 }
 //starts a new game
@@ -47,7 +49,6 @@ function startGame()
     c_score = 0;
 	lives = 3;
 
-    //clear(screen);
     resetGame();
 }
 
@@ -74,8 +75,6 @@ function delayStart()
 //removes any graphic display and activates game mode
 function startPlay() {
 	timerClear();
-    //gametime = 0;
-	//starttime = Date.now();
     clearUI();
     mode = activeMode;
 }
@@ -123,18 +122,11 @@ function demoLoop()
 	//stop after 20 seconds
 	if (gametime >= 20000)
 	{
-		//level = getDemoLevel();
-		//mode = "in between";
-		//resetGame();
 		titleScreen();
 	}
 	c_score = 0;
 }
-//picks a random level number
-function getDemoLevel()
-{
-	return Math.floor(Math.random() * lastlevel) + 1;
-}
+
 //check paddle for any ball collisions
 function paddleDemoCollisions()
 {
@@ -182,8 +174,8 @@ function brickCollisions()
 		if (ball != null)
 		{
 			c_score += 10;
-			//10% chance of spawning another ball
-			if (Math.random() >= 0.90)
+			//5% chance of spawning another ball
+			if (Math.random() >= 0.95)
 			{
 				spawnBall(ball);
 			}
