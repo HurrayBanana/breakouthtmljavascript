@@ -1,15 +1,4 @@
 /*
-collision data for a sprite to sprite collision
-*/
-class collisiondata {
-	constructor(side, dx, dy)
-	{
-		this.side = side;
-		this.dx = dx;
-		this.dy = dy;
-	}
-}
-/*
 a container for a html container to positioned within another container
 this is a static construct, contains functions and properties
 */
@@ -115,8 +104,12 @@ class Sprite {
     }
 	//removes sprite from screen and marks as dead
     kill() {
-        this.dead = true;
-        this.screen.removeChild(this.container);
+		//be careful if double killed then don't try and remove again
+		if (!this.dead)
+		{
+			this.dead = true;
+			this.screen.removeChild(this.container);
+		}
     }
 	//determines if a sprite is within the screen boundary
     onscreen()

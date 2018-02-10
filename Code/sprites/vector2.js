@@ -28,4 +28,8 @@ class vector2{
 	get magnitude() {
 		return Math.sqrt(this.x * this.x + this.y * this.y);
 	}
+	multiply(scaler)
+	{
+		return new vector2(this.x * scaler, this.y * scaler);
+	}
 }

@@ -1,12 +1,14 @@
 /*
 little demo sprite with flashing animation
 */
-class DemoLogo extends Sprite {
+class DemoLogo extends MovingSprite {
     constructor(screen) {
         var div = document.createElement("div");
         div.id = "demo";
-        super(screen, div, new vector2(0, 400));
-
+        super(screen, div, new vector2(0, 0));
+		
+		this.pos.y = -this.size.y;
+		this.velocity = new vector2(0, 50);
         this.time = 0;
 		//always looks better if image is on longer than off
         this.showtime = 0.6; 
@@ -15,6 +17,7 @@ class DemoLogo extends Sprite {
     //adjusts alpha value of sprite
 	//changeing to interpolate between 0 and 1
     tick(delta) {
+		super.update(delta);
 		this.time += delta;
 		if (this.visibility && this.time >= this.showtime)
 		{

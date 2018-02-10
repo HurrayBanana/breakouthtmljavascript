@@ -19,35 +19,31 @@ class Brick extends Sprite {
 	//returns either null or ball hit
 	collisioncheck(allballs)
 	{
-		var score = 0;
-	    //remove any blocks moved off screen
-        //if (this.onscreen()) {
-            //check each active ball against the block
-            for (var i = 0; i < allballs.length; i++) {
-                if (!this.dead && allballs[i].touching(this)) {
+		//don't check dead bricks
+		if (!this.dead)
+		{
+			var score = 0;
+			//check each active ball against the block
+			for (var i = 0; i < allballs.length; i++) {
+				if (!this.dead && allballs[i].touching(this)) {
 					allballs[i].hitsprite(this);
-                    this.kill();
-                    return allballs[i];
-                }
-            }
-        //}
-        //else
-        //{
-        //    this.kill();
-        //}
+					this.kill();
+					return allballs[i];
+				}
+			}
+		}
 		return null;
 	}
-	//drops a brick by number of pixels given
-    drop(distance) {
-        this.move(0, distance);
+	killoffscreen()
+	{
 		if (!this.onscreen())
 			this.kill();
-    }
+	}
 	//moves a brick horizontally by a number of pixels to the left
 	//wrapping around the screen
     scroll(distance) {
-        this.move(distance,0);
-		this.wrapx();
+        this.move(distance.x, distance.y);
+		this.wrap();
     }
 	//forces a wave motion on the bricks base position
 	wave(angle, dx, dy)

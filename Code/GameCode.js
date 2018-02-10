@@ -104,9 +104,7 @@ function timerloop()
 //logic for demo mode
 function demoLoop()
 {
-	
-	if (levelUpdateCallBack != null)
-		levelUpdateCallBack(delta);
+	activelevel.tick(delta);
 	
 	//move all balls
     for (var i = 0; i < activeball.length; i++) {
@@ -119,8 +117,8 @@ function demoLoop()
 	removeDeadBricks();
 	removeDeadBalls();
 	
-	//stop after 20 seconds
-	if (gametime >= 20000)
+	//stop after 10 seconds (milliseconds)
+	if (gametime >= 10000)
 	{
 		titleScreen();
 	}
@@ -138,8 +136,7 @@ function paddleDemoCollisions()
 //actions to be performed in game mode
 function gameLoop()
 {
-	if (levelUpdateCallBack != null)
-		levelUpdateCallBack(delta);
+	activelevel.tick(delta);
 	
 	//move all balls
     for (var i = 0; i < activeball.length; i++) {

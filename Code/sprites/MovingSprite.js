@@ -6,28 +6,18 @@ class MovingSprite extends Sprite {
 
         super(screen, container, start);
 		this.velocity = velocity;
-        //this.xv = xvel;
-        //this.yv = yvel;
 		this.change = new vector2(0, 0);
-		//this.dx = 0;
-		//this.dy = 0;
     }
 
     update(delta) {
 		//store for previous position
 		this.change.x = this.velocity.x * delta;
 		this.change.y = this.velocity.y * delta;
-		//this.dx = this.xv * delta;
-		//this.dy = this.yv * delta;
 
         this.pos.x += this.change.x;
         this.pos.y += this.change.y;
-        //this.x += this.dx;
-        //this.y += this.dy;
 		
 		this.render();
-        //this.container.style.left = this.x + "px";
-        //this.container.style.top = this.y + "px";
     }
     reflectx() { this.velocity.x = -this.velocity.x; }
     reflecty() { this.velocity.y = -this.velocity.y; }
@@ -37,16 +27,16 @@ class MovingSprite extends Sprite {
     }
 	backx()
 	{
-		this.pos.x -= this.change.x;//this.xv;
+		this.pos.x -= this.change.x;
 	}
 	backy()
 	{
-		this.pos.y -= this.change.y;//this.yv;
+		this.pos.y -= this.change.y;
 	}
 	back()
 	{
-		this.pos.x -= this.change.x;//this.xv;
-		this.pos.y -= this.change.y;//this.yv;
+		this.pos.x -= this.change.x;
+		this.pos.y -= this.change.y;
 	}
 	resolvecollision(collisiondata)
 	{
