@@ -87,7 +87,7 @@ class Sprite {
         this.pos.y += y;
 		this.render();
     }
-	//returns true if his and another sprite are overlapping
+	//returns true if this and another sprite are overlapping
     touching(other) {
 		//no collisions if either this or other hidden
 		if (!other.visible || !this.visible)
@@ -167,8 +167,14 @@ class Sprite {
 	//wrap in y axis
 	wrapy()
 	{
+		//if the bottom of the sprite is above the top of the screen
+		//drop down by the height of the screen and the height of the sprite
+		//top of the sprite will then be just below screen
 		if (this.bottom < 0)
 			this.pos.y += this.screensize.height + this.size.height;
+		//if the top of the spriet has gone past the bottom of the screen
+		//move up by the screen height and height of sprite
+		//bottom of sprite will just be off the top of the screen
 		else if (this.top >= this.screensize.height)
 			this.pos.y -= this.screensize.height + this.size.height;
 	}

@@ -4,7 +4,9 @@ little demo sprite with flashing animation
 class DemoLogo extends MovingSprite {
     constructor(screen) {
         var div = document.createElement("div");
-        div.id = "demo";
+		div.id = "demo";
+		
+		//must call super class before accessing any attributes
         super(screen, div, new vector2(0, 0));
 		
 		this.pos.y = -this.size.y;
@@ -19,14 +21,18 @@ class DemoLogo extends MovingSprite {
     tick(delta) {
 		super.update(delta);
 		this.time += delta;
+		//if visible, has showtime elapsed
 		if (this.visibility && this.time >= this.showtime)
 		{
+			//reset counter and hide 
 			this.time -= this.showtime;
 			this.hide();
 			//console.log("hide demo"); output to chrome developer console
 		}
+		//if not visible, has hide time elapsed
 		else if (!this.visibility && this.time >= this.hidetime)
 		{
+			//reset counter and then show
 			this.time -= this.hidetime;
 			this.show();
 			//console.log("show demo");

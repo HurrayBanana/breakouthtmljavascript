@@ -12,7 +12,8 @@ class HBLogo extends Sprite {
         this.container.style.opacity = this.alpha.toString();
     }
     //adjusts alpha value of sprite
-	//changeing to interpolate between 0 and 1
+    //changeing to interpolate between 0 and 1
+    //sets the css opacity attribute
     tick(delta) {
         this.alpha += this.changealpha * delta;
         if (this.alpha < 0.0 || this.alpha > 1)

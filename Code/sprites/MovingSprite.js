@@ -3,7 +3,7 @@ provides a class for a sprite with a velocity
 */
 class MovingSprite extends Sprite {
     constructor(screen, container, start, velocity){//startx, starty, xvel, yvel) {
-
+		//call constructor off base class
         super(screen, container, start);
 		this.velocity = velocity;
 		this.change = new vector2(0, 0);
@@ -60,6 +60,7 @@ class MovingSprite extends Sprite {
 		var collisiondata = this.closestside(item);
 		this.resolvecollision(collisiondata);
 		
+		//left and right are side 0 and 1, 2 and 3 are top and bottom
 		if (collisiondata.side > 1)
 			this.reflecty();
 		else

@@ -1,5 +1,5 @@
 /*
-ball class
+ball class, based on moving sprite
 */
 class Ball extends MovingSprite {
     constructor(screen, start, velocity, deadline) {
@@ -11,11 +11,15 @@ class Ball extends MovingSprite {
 		this.deadline = deadline;
     }
 
-	//do normal update but then check for hitting sides and top
+	//do normal sprite updates but then check for hitting sides and top
 	//and kill line
     update(delta) {
-        super.update(delta);
-        this.bounceinside();
+		super.update(delta);
+		
+		//call bounceinside of inherited class movingsprite
+		this.bounceinside();
+		
+		//check for going lower than paddle
 		if (this.bottom >= deadline)
 			this.kill();
     }
@@ -29,6 +33,8 @@ class Ball extends MovingSprite {
 		//ensure speed stays the same despite changing the horizontal velocity
 		var speed = this.velocity.magnitude;
 		this.velocity.x = centredistance * 5;
+
+		//call vector2.strenth
 		this.velocity.strength(speed);
 	}
 }
