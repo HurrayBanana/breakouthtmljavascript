@@ -1,15 +1,21 @@
-// JavaScript source code
-var h_score;
-var c_score;
-var lives;
-var scoreText;
-var topscoreText;
-var livesText;
-var logo;
-var demologo;
+/*
+ Handles UI some specific code functions
+ */
+var h_score;                //holds the current high score
+var c_score;                //holds current game scire
+var lives;                  //holds the current number of lives
+var scoreText;              //holds a span container to show the current score
+var topscoreText;           //holds a span container to show the high score
+var livesText;              //holds a span container to show the number of lives
+var logo;                   //holds a reference to my logo instance of the HBLogo class
+var demologo;               //holds a reference to the demo logo which appears during demo mode
+var demostart;				//holds a timer event to trigger demo starting, used by UI.js
 
-var currentImage = null;
-//remove any user message graphics
+var currentImage = null;    //holds currently loaded image for display
+
+/*
+remove any user message graphics
+*/
 function clearUI()
 {
     if (currentImage) {
@@ -17,7 +23,9 @@ function clearUI()
         currentImage = null;
     }
 }
-//setup title screen
+/*
+setup title screen and organise demo starting event
+*/
 function titleScreen()
 {
     mode = "title";
@@ -26,17 +34,26 @@ function titleScreen()
 	
 	demostart = setTimeout(startDemo, 3000);
 }
-//displays logo
+/*
+displays my logo
+*/
 function showLogo()
 {
     logo = new HBLogo(screen);
 }
-//displays demo
+/*
+shows the demo logo while demo is active
+*/
 function showDemoLogo()
 {
     demologo = new DemoLogo(screen);
 }
-//shows particular user graphic on screen
+/*
+shows particular user graphic on screen
+as specified by the filename
+these always appear in the same position as defined in the css
+.imageoverlay
+*/
 function showImage(filename)
 {
     currentImage = document.createElement("img");
@@ -45,17 +62,29 @@ function showImage(filename)
     currentImage.src = filename;
     screen.appendChild(currentImage);
 }
+/*
+loads the specific image for Level Clear
+*/
 function showLevelClear() {
     showImage(".\\graphics\\levelcomplete.fw.png");
 }
+/*
+loads the specific image for get ready
+*/
 function showGetReady() {
     showImage(".\\graphics\\getready.fw.png");
 }
 
+/*
+loads the specific image for Game over
+*/
 function showGameOver() {
     showImage(".\\graphics\\gameover.fw.png");
 }
-//adds score display to game screen
+/*
+creates the 3 span containers to hold the score and lives
+information to be displayed at the top of the screen
+*/
 function addScoreInfo(screen) {
     scoreText = document.createElement("span");
     scoreText.id = "currentscore";
@@ -73,7 +102,11 @@ function addScoreInfo(screen) {
     screen.appendChild(livesText);
 }
 
-//update score info
+/*
+updates the score display information
+checks to see if high score as been beaten first
+and updates if it has
+*/
 function updateUI()
 {
     if (c_score > h_score)

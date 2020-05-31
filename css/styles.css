@@ -81,6 +81,7 @@ style used for large UI graphics
     left:0;
     right:0;
     margin: auto;
+    z-index:500;
 	/* transform-origin: center center 0; */
 	transform:rotateY(30deg);
 }

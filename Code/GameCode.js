@@ -1,20 +1,21 @@
 ﻿/*
-Game code
+Game code which does the major control of the system
 */
 var activeball = [];		//holds active balls
 var activebrick = [];		//holds active bricks	
 var starttimer;				//holds reference to start timer, in case we need to abort it
-var demostart;
 var paddle;					//reference to the players paddle
 var screen;					//reference to the html container being used for the game screen
 var mode = "title"; 		//current game mode
 var activeMode;				//holds the mode demo or game that needs to be active during play
 var deadline = 570;			//line by which ball is killed
-var democontrol;
+var democontrol;			//holds a reference to the demo controller (demopick class)
 
-//first time setup of system
-//gets reference to game area
-//sets up timer and keyboard events
+/*
+first time setup of system
+gets reference to game area
+sets up timer and keyboard events
+*/
 function initialise() {
     screen = document.getElementById("gameScreen");
 	
@@ -30,7 +31,9 @@ function initialise() {
     h_score = 100;
     titleScreen();
 }
-//sets up demo mode
+/*
+sets up demo mode
+*/
 function startDemo()
 {
 	activeMode = "demo";
@@ -40,7 +43,9 @@ function startDemo()
 
     resetGame();
 }
-//starts a new game
+/*
+starts a new game
+*/
 function startGame()
 {
 	removeResources();
@@ -52,7 +57,9 @@ function startGame()
     resetGame();
 }
 
-//resets game components and starts current level
+/*
+resets game components and starts current level
+*/
 function resetGame() {
     clear(screen);
     activebrick = [];
@@ -61,7 +68,9 @@ function resetGame() {
 	mode = "in between";
 	delayStart();
 }
-//activates gameplay after 3 seconds
+/*
+activates gameplay after 3 seconds
+*/
 function delayStart()
 {
 	//get demo logo on screen
@@ -72,14 +81,20 @@ function delayStart()
     starttimer = setTimeout(startPlay, 3000);
 }
 
-//removes any graphic display and activates game mode
+/*
+removes any graphic display and activates game mode
+*/
 function startPlay() {
 	timerClear();
     clearUI();
     mode = activeMode;
 }
 
-//game time delta recording
+/*
+game time delta recording
+calls different subroutines depending on which mode
+the game is currently in
+*/
 function timerloop()
 {
     if (mode == "game")
@@ -101,7 +116,9 @@ function timerloop()
         logo.tick(delta);
 
 }
-//logic for demo mode
+/*
+logic for demo mode
+*/
 function demoLoop()
 {
 	activelevel.tick(delta);
@@ -111,6 +128,7 @@ function demoLoop()
         activeball[i].update(delta);
     }
 	brickCollisions();
+	//get paddle to track the given ball
 	paddle.simulateplay(activeball[0]);
 	paddleDemoCollisions();
 
@@ -125,7 +143,11 @@ function demoLoop()
 	c_score = 0;
 }
 
-//check paddle for any ball collisions
+/*
+check paddle for any ball collisions in demo mode
+uses a different rebound method as the demo paddle
+always hits the ball in the centre
+*/
 function paddleDemoCollisions()
 {
 	for (var i = 0; i < activeball.length; i++) {
@@ -133,7 +155,9 @@ function paddleDemoCollisions()
 			activeball[i].hitsprite(paddle);
 	}
 }
-//actions to be performed in game mode
+/*
+actions to be performed in game mode
+*/
 function gameLoop()
 {
 	activelevel.tick(delta);
@@ -152,7 +176,9 @@ function gameLoop()
 	removeDeadBalls();
 	
 }
-//check paddle for any ball collisions
+/*
+check paddle for any ball collisions
+*/
 function paddleCollisions()
 {
 	for (var i = 0; i < activeball.length; i++) {
@@ -162,7 +188,9 @@ function paddleCollisions()
 		}
 	}
 }
-//get each brick to check against active game balls
+/*
+get each brick to check against active game balls
+*/
 function brickCollisions()
 {
     //check all blocks for collision with balls
@@ -180,7 +208,9 @@ function brickCollisions()
 	}
 }
 
-//removes any destroyed blocks and checks for level end
+/*
+removes any destroyed blocks and checks for level end
+*/
 function removeDeadBricks() {
     keep = [];
     for (var i = 0; i < activebrick.length; i++) {
@@ -198,7 +228,9 @@ function removeDeadBricks() {
         setTimeout(nextLevel, 3000);
     }
 }
-//removes any dead balls and checks for all balls lost to end life
+/*
+removes any dead balls and checks for all balls lost to end life
+*/
 function removeDeadBalls() {
     keep = [];
     for (var i = 0; i < activeball.length; i++) {
@@ -218,23 +250,29 @@ function removeDeadBalls() {
 			nextLife();
     }
 }
-//short delay the start gameplay
+/*
+short delay the start gameplay
+*/
 function nextLife()
 {
 	mode = "in between";
 	createStartBall();
 	delayStart();
 }
-//short delay then back to title			
+/*
+short delay then back to title			
+*/
 function gameOver()
 {
 	mode = "in between";
 	showGameOver();
 	setTimeout(titleScreen, 3000);
 }
-//reduces lives by 1
-//and updates display
-//returns number of lives for checking
+/*
+reduces lives by 1
+and updates display
+returns number of lives for checking
+*/
 function lostLife()
 {
 	lives -= 1;
@@ -242,7 +280,9 @@ function lostLife()
 
 	return lives;
 }
-//Removes all children of a given node
+/*
+Removes all children of a given node
+*/
 function clear(item) {
     currentImage = null;
 
@@ -252,7 +292,9 @@ function clear(item) {
 	//always draw my logo
     showLogo();
 }
-//removes any resources that need cancelling
+/*
+removes any resources that need cancelling
+*/
 function removeResources()
 {
 	clearActiveInputs();

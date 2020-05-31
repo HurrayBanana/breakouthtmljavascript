@@ -6,18 +6,27 @@ var gameticker;				//holds reference to game timer
 var tickdelta = 20;			//time interval for game ticks
 var timerCallBack = null;	//call back routine executed by timer
 
+/*
+sets up the intial game timer, only setup once
+*/
 function timeInitialise()
 {
 	gameticker = setInterval(timer, tickdelta);
 	timerClear();
 }
-//sets timer values to zero
+/*
+sets timer values to zero and records current time
+*/
 function timerClear()
 {
     gametime = 0;
 	starttime = Date.now();
 }
-//record time delta and call any set callback
+/*
+generates the time delta (number of milliseconds this game update has taken)
+and calls the timerCallBack subroutine if it has a valid
+subroutine reference
+*/
 function timer()
 {
 	var currenttime = Date.now();
