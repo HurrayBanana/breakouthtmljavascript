@@ -28,7 +28,7 @@ as passed in levelnum
 */
 function generateLevel(levelnum) {
 	//comment this line out if normal play required
-	//levelnum = 7	; //force particular level to play for testing
+	levelnum = 4	; //force particular level to play for testing
     addScoreInfo(screen);
 	levelUpdateCallBack = null;
     switch (levelnum) {

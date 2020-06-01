@@ -61,7 +61,7 @@ function startGame()
 resets game components and starts current level
 */
 function resetGame() {
-    clear(screen);
+	clear(screen);
     activebrick = [];
     activeball = [];
 	generateLevel(level);

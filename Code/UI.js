@@ -29,6 +29,8 @@ setup title screen and organise demo starting event
 function titleScreen()
 {
     mode = "title";
+    screen.style.backgroundColor = "black";
+
     removeResources();
     showImage(".\\graphics\\title.fw.png");
 	
