@@ -10,11 +10,12 @@ class levelset{
 	*/
 	constructor(screen, bricks, timedelay)
 	{
-		this.bricks = bricks;
+		//force level to use global activebrick array bricks parameter passed as a null
+		this.bricks = activebrick// bricks;
 		this.timerdelay = timedelay;
 		this.screen = screen;
 		this.time = 0;					//reset level time
-
+		this.author = "Hurray Banana";
 		//default colour for background
 		this.screen.style.backgroundColor = "black";
 		

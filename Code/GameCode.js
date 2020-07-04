@@ -16,9 +16,10 @@ var mode = "title"; 		//current game mode
 var activeMode;				//holds the mode demo or game that needs to be active during play
 var deadline = 570;			//line by which ball is killed
 var democontrol;			//holds a reference to the demo controller (demopick class)
-var demotime = 100 * 1000;	//time in millisseconds for demo to last (default 10 secs)
+var demotime = 10 * 1000;	//time in millisseconds for demo to last (default 10 secs)
 var killbricks = true;		//whether to kill bricks or not (default true)
 var killball = false;			//whether ball dies when passing paddle (default true)
+
 
 /*
 first time setup of system
@@ -26,6 +27,9 @@ gets reference to game area
 sets up timer and keyboard events
 */
 function initialise() {
+
+
+
     screen = document.getElementById("gameScreen");
 	
 	timerCallBack = timerloop;
@@ -35,11 +39,18 @@ function initialise() {
     addEventListener("keydown", move, false);
     addEventListener("keyup", stopmove, false);
 
+	createLevelset();
+
 	democontrol = new demopick(lastlevel);
 	
-    h_score = 100;
+	h_score = 100;
+	
+
+
     titleScreen();
 }
+
+
 /*
 sets up demo mode
 */
@@ -88,7 +99,7 @@ function delayStart()
 		showDemoLogo();
 	
     showGetReady();
-    starttimer = setTimeout(startPlay, 3000);
+    starttimer = setTimeout(startPlay, 2000);
 }
 
 /*
@@ -131,6 +142,7 @@ logic for demo mode
 */
 function demoLoop()
 {
+	cyclecredits();
 	activelevel.tick(delta);
 	processpickups();
 	//move all balls
@@ -177,6 +189,8 @@ actions to be performed in game mode
 */
 function gameLoop()
 {
+	cyclecredits();
+
 	activelevel.tick(delta);
 				
 	processpickups();

@@ -13,6 +13,20 @@ var demostart;				//holds a timer event to trigger demo starting, used by UI.js
 
 var currentImage = null;    //holds currently loaded image for display
 
+var creditsAuthor;                //holds a container showing the author and game name
+var creditsName;                //holds a container showing the author and game name
+var colorcycle = [
+    "black",
+    "red",
+    "orange",
+    "yellow",
+    "lime",
+    "blue",
+    "indigo",
+    "violet",
+];
+var colorpick;
+var colordelay;
 /*
 remove any user message graphics
 */
@@ -102,8 +116,31 @@ function addScoreInfo(screen) {
     livesText.id = "lives";
     livesText.innerText = "LIVES " + lives;
     screen.appendChild(livesText);
+
+	creditsAuthor = document.createElement("div");
+    creditsAuthor.id = "creditsAuthor";
+    creditsAuthor.style.top = (screen.clientHeight - 30) + "px";
+    creditsAuthor.innerText = "";
+    screen.appendChild(creditsAuthor);
+
+	creditsName = document.createElement("div");
+    creditsName.id = "creditsName";
+    creditsName.style.top = (screen.clientHeight - 30) + "px";
+    creditsName.innerText = "";
+    screen.appendChild(creditsName);
+
+    colorpick = -1;
+    colordelay = 10;
 }
 
+
+function showCredits(levelauthor, levelname)
+{
+    creditsName.innerText = "NM: " + levelname;
+    creditsName.style.left = (screen.clientWidth - 1 - creditsName.clientWidth) + "px";
+
+    creditsAuthor.innerText = "BY: " + levelauthor ;
+}
 /*
 updates the score display information
 checks to see if high score as been beaten first
@@ -116,4 +153,27 @@ function updateUI()
 
     topscoreText.innerText = "TOP SCORE " + h_score;
     scoreText.innerText = "1UP " + c_score;
+
+
 }
+
+function cyclecredits()
+{
+    //change credits color
+    colordelay++
+    if (colordelay > 25)
+    {
+        colordelay = 0;
+        colorpick = (colorpick + 1) % colorcycle.length;
+
+        creditsName.style.color = colorcycle[colorpick];
+        creditsAuthor.style.color = colorcycle[colorpick];
+    }
+}
+
+
+
+
+
+
+

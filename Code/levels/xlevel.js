@@ -31,7 +31,8 @@ class xlevel extends character{
 	constructor(screen, bricks)
 	{
 		//call base constructor - don't use a timer subsystem
-		super(screen, bricks, 0);
+        super(screen, bricks, 0);
+        
         //colour set first colour 0 ignored
         this.colorset = [
             "black",  
