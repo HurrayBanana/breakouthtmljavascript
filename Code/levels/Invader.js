@@ -42,8 +42,43 @@ class invader extends twostates{
         //generate two sets of bricks for flashing so only one
         //set on at once (does animation)
         //shrink as there are more than a width's amount of bricks
-        this.flashlayout(this.layOne, 0.7, true)
-        this.flashlayout(this.layTwo, 0.7, false)
+	
+		this.performCustomLayout(this.layOne,  					//blockmap to use
+									new vector2(50,50),			//left hand marginBottom		
+									new vector2(26,26), 		//spread between bricks	
+									new vector2(0.5, 1.25), 	//scale
+									true);						//show this set
+									
+		this.performCustomLayout(this.layTwo,
+									new vector2(50,50),
+									new vector2(26,26),
+									new vector2(0.5, 1.25),
+									false);
+		this.leveltime = 0;
+		
     }
+	
+	action(delta)
+	{
+		super.action(delta);
+		/*
+		for (var i = 0; i < this.bricks.length; i++)
+		{
+			this.bricks[ i ].move(25,0);
+			this.bricks[ i ].wrap();
+		}
+		*/
+	}
+	
+	rawtimer(delta)
+	{
+			
+		for (var i = 0; i < this.bricks.length; i++)
+		{
+			this.bricks[ i ].move(50 * delta,0);
+			this.bricks[ i ].wrap();
+		}
+	}
+	
 }
 

@@ -49,6 +49,4 @@ class twostates extends character{
 		for (var i = 0; i < this.bricks.length; i++)
             this.bricks[i].visible = !this.bricks[i].visible;
     }
-    
 }
-

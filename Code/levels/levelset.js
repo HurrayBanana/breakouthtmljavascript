@@ -39,7 +39,7 @@ class levelset{
 	own code to run without having to worry about how it's called
 	*/
 	action(delta){}
-	
+	rawtimer(delta){}
 	/*
 	call back routine will call this.action if the timerdelay has elapsed
 	and reset it ready for the next elapse event
@@ -47,6 +47,7 @@ class levelset{
 	*/
 	tick(delta)
 	{
+		this.rawtimer(delta);
 		if (this.timerdelay > 0)
 		{
 			this.time += delta;
@@ -96,3 +97,4 @@ class levelset{
 		return b;
 	}
 }
+

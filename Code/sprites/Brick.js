@@ -32,15 +32,22 @@ class Brick extends Sprite {
 	collisioncheck(allballs)
 	{
 		//don't check dead bricks and only visible ones
-		if (!this.dead || this.visible)
+		if (!this.dead && this.visible)
 		{
 			var score = 0;
 			//check each active ball against the block
 			for (var i = 0; i < allballs.length; i++) {
 				if (!this.dead && allballs[i].touching(this)) {
 					allballs[i].hitsprite(this);
-					this.kill();
-					return allballs[i];
+					if (killbricks)
+					{
+						this.kill();
+						return allballs[i];
+					}
+					else
+					{
+						return null;
+					}
 				}
 			}
 		}

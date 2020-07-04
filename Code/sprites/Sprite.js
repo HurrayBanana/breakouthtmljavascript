@@ -129,7 +129,7 @@ class Sprite {
         this.size.y = this.container.getBoundingClientRect().height;
 
 		//adjust z order based on scale
-		this.container.style.zIndex = (100 * newscale).toString();
+		this.container.style.zIndex = (100 * vectorScale.x).toString();
 	}
 	/*
 	changes the css to force the browser to not render the sprites container

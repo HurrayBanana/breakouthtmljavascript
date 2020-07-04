@@ -1,6 +1,12 @@
 ﻿/*
 Game code which does the major control of the system
 */
+/*TODO add a list for powerup sprite management
+special brick spawns powerup, collision check with paddle for special brick
+kill past bottom of screen
+*/
+var pickups = []				//holds pickups
+
 var activeball = [];		//holds active balls
 var activebrick = [];		//holds active bricks	
 var starttimer;				//holds reference to start timer, in case we need to abort it
@@ -10,6 +16,9 @@ var mode = "title"; 		//current game mode
 var activeMode;				//holds the mode demo or game that needs to be active during play
 var deadline = 570;			//line by which ball is killed
 var democontrol;			//holds a reference to the demo controller (demopick class)
+var demotime = 100 * 1000;	//time in millisseconds for demo to last (default 10 secs)
+var killbricks = true;		//whether to kill bricks or not (default true)
+var killball = false;			//whether ball dies when passing paddle (default true)
 
 /*
 first time setup of system
@@ -63,7 +72,8 @@ resets game components and starts current level
 function resetGame() {
 	clear(screen);
     activebrick = [];
-    activeball = [];
+	activeball = [];
+	pickups = []; //add this
 	generateLevel(level);
 	mode = "in between";
 	delayStart();
@@ -122,7 +132,7 @@ logic for demo mode
 function demoLoop()
 {
 	activelevel.tick(delta);
-	
+	processpickups();
 	//move all balls
     for (var i = 0; i < activeball.length; i++) {
         activeball[i].update(delta);
@@ -136,13 +146,20 @@ function demoLoop()
 	removeDeadBalls();
 	
 	//stop after 10 seconds (milliseconds)
-	if (gametime >= 10000)
+	if (gametime >= demotime)
 	{
 		titleScreen();
 	}
 	c_score = 0;
 }
-
+function processpickups()
+{
+	for (var i = 0; i < pickups.length; i++)
+	{
+		if (!pickups[i].dead)
+			pickups[i].update(delta);
+	}	
+}
 /*
 check paddle for any ball collisions in demo mode
 uses a different rebound method as the demo paddle
@@ -161,6 +178,8 @@ actions to be performed in game mode
 function gameLoop()
 {
 	activelevel.tick(delta);
+				
+	processpickups();
 	
 	//move all balls
     for (var i = 0; i < activeball.length; i++) {
@@ -178,6 +197,7 @@ function gameLoop()
 }
 /*
 check paddle for any ball collisions
+TODO add powerup collisions here
 */
 function paddleCollisions()
 {
@@ -187,6 +207,16 @@ function paddleCollisions()
 			activeball[i].hitpaddle(paddle);
 		}
 	}
+	//now check for pickups
+	for (var i = 0; i < pickups.length; i++)
+	{
+		if (!pickups[i].dead && pickups[i].touching(paddle))
+		{
+			pickups[i].kill();
+			pickups[i].pickupAction(paddle);
+		}
+	}	
+
 }
 /*
 get each brick to check against active game balls
@@ -199,15 +229,34 @@ function brickCollisions()
 		if (ball != null)
 		{
 			c_score += 10;
-			//5% chance of spawning another ball
-			if (Math.random() >= 0.95)
-			{
-				spawnBall(ball);
-			}
+			choosepickup(activebrick[j])
 		}
 	}
 }
-
+function choosepickup(brick)
+{
+	//90% chance of spawning a pickup
+	if (Math.random() <= 0.9)//0.95)
+	{
+		var dropchoice = Math.trunc(Math.random() * 3) // number of d
+		//new extendpickup(screen, activebrick[j].centre);
+		switch (dropchoice) {
+			case 0:
+				new multipickup(screen, brick.centre);
+				break;
+			case 1:
+				new extendpickup(screen, brick.centre);
+				break;
+			case 2:
+				new shrinkpickup(screen, brick.centre);
+				break;
+					
+			default:
+				break;
+		}
+		
+	}
+}
 /*
 removes any destroyed blocks and checks for level end
 */
@@ -215,7 +264,18 @@ function removeDeadBricks() {
     keep = [];
     for (var i = 0; i < activebrick.length; i++) {
         if (!activebrick[i].dead)
-            keep.push(activebrick[i]);
+			keep.push(activebrick[i]);
+		/*
+		extra code to deal with killed bricks to see if they are special ones
+		*/
+		/*
+		else 
+		if (typeof activebrick[i].pickupAction === "function")
+			{
+				//console.log("POWER up");
+				activebrick[i].activate(paddle);
+			}
+		*/
     }
 	//swap list references
     activebrick = keep;

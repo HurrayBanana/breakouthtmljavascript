@@ -4,7 +4,7 @@ creating the intial ball and paddle and
 moving to the next one or ending the game
 */
 var level;					// current game level
-var lastlevel = 13;			//last level of game (ought to use some form of automatic method for doing this)
+var lastlevel = 16;			//last level of game (ought to use some form of automatic method for doing this)
 var activelevel;			//holds reference to current level object
 
 /*
@@ -28,18 +28,18 @@ as passed in levelnum
 */
 function generateLevel(levelnum) {
 	//comment this line out if normal play required
-	levelnum = 4	; //force particular level to play for testing
+	levelnum = 1	; //force particular level to play for testing
     addScoreInfo(screen);
 	levelUpdateCallBack = null;
     switch (levelnum) {
         case 1:
-			activelevel = new standard(screen, activebrick, 3, 8, 1.2);
+			activelevel = new Ultimate/*standard*/(screen, activebrick, 10, 8, 0.5);
             break;
         case 2:
-			activelevel = new drop(screen, activebrick, 3, 10, 2.5, 10);
+			activelevel = new drop(screen, activebrick, 5, 8, 0.1, 1);
             break;
         case 3:
-			activelevel = new scroll(screen, activebrick, 0, new vector2(-50,0));
+			activelevel = new scroll(screen, activebrick, 0.01, new vector2(-50,0));
             break;
 		case 4:
 			activelevel = new wave(screen, activebrick, 0.01, false); 
@@ -71,6 +71,23 @@ function generateLevel(levelnum) {
 		case 13:
 			activelevel = new invader(screen, activebrick, 2);
 			break;
+		case 14:
+			activelevel = new wave(screen, activebrick, 0.01, true); 
+			break;
+		case 15:
+			activelevel = new xlevel(screen, activebrick);
+			break;
+		case 16:
+			activelevel = new bouncer(screen, activebrick, 0.02, 10, 500, 1);
+			break;
+			//constructor(screen, bricks, timedelay, toplimit, bottomlimit, pixelstep)
+		case 17:
+			activelevel = new testlevel(screen, activebrick);
+			break;
+					//constructor(screen, bricks, timedelay, toplimit, bottomlimit, pixelstep)
+		case 18:
+			activelevel = new SpecialLevel(screen, activebrick);
+			break;		
 		default:
 			//generate a tall standard if we have an erroneous level number
 			//rather than fall over

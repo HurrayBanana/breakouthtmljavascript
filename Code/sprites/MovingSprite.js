@@ -95,7 +95,7 @@ class MovingSprite extends Sprite {
 			this.backx();
             this.reflectx();
 		}
-        if (this.pos.y < 0)
+        if (this.pos.y < 0 || this.bottom >= this.screensize.height)
 		{
 			this.backy();
             this.reflecty();

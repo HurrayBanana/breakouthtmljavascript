@@ -36,6 +36,26 @@ class character extends levelset{
         }
     }
 
+	performCustomLayout(blockmap, leftmargin, spread, scale, visibility)
+	{
+        for (var y = 0; y < blockmap.length; y++) {
+            for (var x = 0; x < blockmap[y].length; x++) {
+                var colour = blockmap[y][x];
+                if (colour > 0)
+                {
+                    var b = this.setBlockAt(new vector2(x, y), 
+								this.colorset[colour % this.colorset.length],
+									1, leftmargin, spread);
+									
+					b.scaleTo(scale);	
+					b.visible = visibility;
+                }
+            }
+        }
+	}
+	
+		
+
     /*example of a blockmap
     place a row column brick layout
     0 means no brick, other numbers indicate colour number
@@ -51,3 +71,6 @@ class character extends levelset{
     ];
     */
 }
+
+
+

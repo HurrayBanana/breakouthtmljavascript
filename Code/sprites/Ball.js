@@ -29,7 +29,7 @@ class Ball extends MovingSprite {
 		this.bounceinside();
 		
 		//check for going lower than paddle
-		if (this.bottom >= deadline)
+		if (this.bottom >= deadline && killball)
 			this.kill();
     }
 	/*
