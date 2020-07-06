@@ -16,9 +16,9 @@ var mode = "title"; 		//current game mode
 var activeMode;				//holds the mode demo or game that needs to be active during play
 var deadline = 570;			//line by which ball is killed
 var democontrol;			//holds a reference to the demo controller (demopick class)
-var demotime = 10 * 1000;	//time in millisseconds for demo to last (default 10 secs)
+var demotime = 20 * 1000;	//time in millisseconds for demo to last (default 10 secs)
 var killbricks = true;		//whether to kill bricks or not (default true)
-var killball = false;			//whether ball dies when passing paddle (default true)
+var killball = true;			//whether ball dies when passing paddle (default true)
 
 
 /*
@@ -78,6 +78,24 @@ function startGame()
 }
 
 /*
+picks a level to show in demo mode altering specific level based
+on levelchange parameter
+*/
+function preview(levelchange)
+{
+	clear(screen);
+    activebrick = [];
+	activeball = [];
+	pickups = []; //add this
+	level += levelchange;
+	if (level < 1) level = lastlevel;
+	else if (level > lastlevel) level = 1;
+
+	generateLevel(level);
+	mode = "in between";
+	delayStart(500);
+}
+/*
 resets game components and starts current level
 */
 function resetGame() {
@@ -87,19 +105,19 @@ function resetGame() {
 	pickups = []; //add this
 	generateLevel(level);
 	mode = "in between";
-	delayStart();
+	delayStart(3000);
 }
 /*
 activates gameplay after 3 seconds
 */
-function delayStart()
+function delayStart(delaytime)
 {
 	//get demo logo on screen
 	if (activeMode == "demo")
 		showDemoLogo();
 	
     showGetReady();
-    starttimer = setTimeout(startPlay, 2000);
+    starttimer = setTimeout(startPlay, delaytime);
 }
 
 /*

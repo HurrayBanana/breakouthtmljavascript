@@ -53,13 +53,21 @@ function move(e) {
             if (mode == "game" && !leftrepeat) {
                 moveLeft();
                 leftrepeat = setInterval(moveLeft, 20);
-            }
-            break;
+			}
+			else if (mode == "demo" ){//&& !leftrepeat) {
+                preview(-1);
+                //leftrepeat = setInterval(clearActiveInputs, 500);
+			}
+			break;
         case KEY_RIGHT:
             if (mode == "game" && !rightrepeat) {
                 moveRight();
                 rightrepeat = setInterval(moveRight, 20);
             }
+			else if (mode == "demo" ){//&& !leftrepeat) {
+                preview(1);
+                //rightrepeat = setInterval(clearActiveInputs, 500);
+			}
             break;
     }
 }

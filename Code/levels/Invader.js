@@ -61,15 +61,15 @@ class invader extends twostates{
 	action(delta)
 	{
 		super.action(delta);
-		/*
+		
 		for (var i = 0; i < this.bricks.length; i++)
 		{
 			this.bricks[ i ].move(25,0);
 			this.bricks[ i ].wrap();
 		}
-		*/
+		
 	}
-	
+	/*
 	rawtimer(delta)
 	{
 			
@@ -79,6 +79,6 @@ class invader extends twostates{
 			this.bricks[ i ].wrap();
 		}
 	}
-	
+	*/
 }
 

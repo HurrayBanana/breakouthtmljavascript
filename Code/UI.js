@@ -136,10 +136,10 @@ function addScoreInfo(screen) {
 
 function showCredits(levelauthor, levelname)
 {
-    creditsName.innerText = "NM: " + levelname;
+    creditsName.innerText = "[" + level + " of " + lastlevel + "] " +levelname.toUpperCase();
     creditsName.style.left = (screen.clientWidth - 1 - creditsName.clientWidth) + "px";
 
-    creditsAuthor.innerText = "BY: " + levelauthor ;
+    creditsAuthor.innerText = /*"BY: " +*/ levelauthor.toUpperCase(); ;
 }
 /*
 updates the score display information
