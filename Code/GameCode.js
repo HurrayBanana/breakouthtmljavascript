@@ -268,7 +268,7 @@ function brickCollisions()
 function choosepickup(brick)
 {
 	//90% chance of spawning a pickup
-	if (Math.random() <= 0.9)//0.95)
+	if (Math.random() <= 0.05)//0.95)
 	{
 		var dropchoice = Math.trunc(Math.random() * 3) // number of d
 		//new extendpickup(screen, activebrick[j].centre);
